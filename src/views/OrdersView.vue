@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="text-2xl font-bold mb-4">Manage Orders</h2>
-    <OrderForm @order-created="fetchOrders"/>
+    <h2 class="text-2xl font-bold mb-4 text-center">Manage Orders</h2>
+    <div class="text-center text-red-500" v-if="!orders.length">No Orders yet !</div>
     <OrderList :orders="orders" @order-selected="selectOrder"/>
     <OrderDetails v-if="selectedOrder" :order="selectedOrder"/>
   </div>
