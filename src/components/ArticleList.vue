@@ -8,7 +8,11 @@
           <p>Price: ${{ article.price }}</p>
         </div>
         <div>
-          <button @click="createOrder(article.articleId)" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Order</button>
+          <button @click="createOrder(article.articleId)" :class="{
+            'text-white py-2 px-4 rounded': true,
+            'bg-blue-500 hover:bg-blue-600': orders_ms_port === 18081,
+            'bg-orange-500 hover:bg-orange-600': orders_ms_port === 28081,
+          }">Order</button>
         </div>
       </div>
     </div>
@@ -24,14 +28,22 @@ export default {
   props: {
     articles: Array,
   },
+  data() {
+    return {
+      articles_ms_port: this.articles_ms_port,
+      orders_ms_port: this.orders_ms_port
+    }
+  },
   methods: {
     async createOrder(articleId) {
       console.log('article ordered : ' + articleId + ' order id : ' + Date.now());
-      await axios.post('http://localhost:8080/api/order/add', {
-        order_id: Date.now(),
-        article_ids: [articleId],
+      const order = {
+        orderId: Date.now(),
+        articleIds: [articleId],
         quantity: 1,
-      });
+      }
+      await axios.post('http://localhost:' + this.articles_ms_port + '/api/order/add', order);
+      await axios.post('http://localhost:' + this.articles_ms_port + '/api/order/send', order);
       this.$emit('order-created');
     },
   },

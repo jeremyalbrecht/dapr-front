@@ -5,7 +5,6 @@
         <router-link to="/" class="font-bold flex">
           <img class="h-10 mr-2" src="https://assets.holopin.io/eyJidWNrZXQiOiJob2xvcGluLWFzc2V0cyIsImtleSI6ImFzc2V0cy9jbG1qbDF0N3gxODk2MGZsY2E3aHBhaWZkIiwiZWRpdHMiOnsicm90YXRlIjpudWxsfX0=" alt="" srcset="">
           <span class="leading-10">
-
             Home
           </span>
         </router-link>
