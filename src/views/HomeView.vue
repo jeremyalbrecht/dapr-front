@@ -2,8 +2,8 @@
   <div>
     <h2 class="text-2xl font-bold mb-4 text-center">
       Dapr Shop
-      <span v-if="articles_ms_port == 18080" class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Azure</span>
-      <span v-else-if="articles_ms_port == 28080" class="bg-orange-100 text-orange-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">AWS</span>
+      <span v-if="cloudStore.articles_ms_port === 18080" class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Azure</span>
+      <span v-else-if="cloudStore.articles_ms_port === 28080" class="bg-orange-100 text-orange-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">AWS</span>
     </h2>
     <ArticleList :articles="articles"/>
   </div>
@@ -12,14 +12,15 @@
 <script>
 import ArticleList from '../components/ArticleList.vue';
 import {ref, onMounted} from 'vue';
+import {mapStores} from "pinia";
+import {useCloudStore} from "@/stores/cloud.js";
 
 export default {
   components: {ArticleList},
-  data() {
-    return {
-      articles_ms_port: this.articles_ms_port,
-      orders_ms_port: this.orders_ms_port
-    }
+  computed: {
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(useCloudStore)
   },
   setup() {
     const articles = ref([]);

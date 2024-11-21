@@ -10,8 +10,8 @@
         <div>
           <button @click="createOrder(article.articleId)" :class="{
             'text-white py-2 px-4 rounded': true,
-            'bg-blue-500 hover:bg-blue-600': orders_ms_port === 18081,
-            'bg-orange-500 hover:bg-orange-600': orders_ms_port === 28081,
+            'bg-blue-500 hover:bg-blue-600': cloudStore.articles_ms_port === 18080,
+            'bg-orange-500 hover:bg-orange-600': cloudStore.articles_ms_port === 28080,
           }">Order</button>
         </div>
       </div>
@@ -21,18 +21,17 @@
 
 <script>
 import axios from 'axios';
-
-
+import {mapStores} from "pinia";
+import {useCloudStore} from "@/stores/cloud.js";
 
 export default {
+  computed: {
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(useCloudStore)
+  },
   props: {
     articles: Array,
-  },
-  data() {
-    return {
-      articles_ms_port: this.articles_ms_port,
-      orders_ms_port: this.orders_ms_port
-    }
   },
   methods: {
     async createOrder(articleId) {
@@ -42,8 +41,8 @@ export default {
         articleIds: [articleId],
         quantity: 1,
       }
-      await axios.post('http://localhost:' + this.articles_ms_port + '/api/order/add', order);
-      await axios.post('http://localhost:' + this.articles_ms_port + '/api/order/send', order);
+      await axios.post('http://localhost:' + this.cloudStore.articles_ms_port + '/api/order/add', order);
+      await axios.post('http://localhost:' + this.cloudStore.articles_ms_port + '/api/order/send', order);
       this.$emit('order-created');
     },
   },

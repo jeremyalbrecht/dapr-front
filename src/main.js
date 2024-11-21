@@ -3,13 +3,11 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from "@/router/index.js";
+import {createPinia} from "pinia";
 
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.config.globalProperties.articles_ms_port = 18080
-app.config.globalProperties.orders_ms_port = 18081
-app.config.globalProperties.payment_ms_port = 15000
-
-app.use(router).mount('#app')
+app.use(router).use(pinia).mount('#app')
 
