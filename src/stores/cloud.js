@@ -7,6 +7,7 @@ export const useCloudStore = defineStore('cloud', {
         orders_ms_port: 18081, // Default to Azure
         payment_ms_port: 15000, // Default to Azure
         selectedCloud: 'azure', // Default cloud provider
+        showCloudSelector: false,
     }),
     actions: {
         selectCloud(cloud) {

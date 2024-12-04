@@ -21,26 +21,29 @@
 
         <!-- Cloud Selector -->
         <div class="flex space-x-4">
-          <button
-              @click="selectCloud('azure')"
-              class="px-4 py-2 font-semibold text-sm rounded-lg shadow-md focus:outline-none transition-colors"
-              :class="{
+          <template v-if="this.cloudStore.showCloudSelector">
+            <button
+                @click="selectCloud('azure')"
+                class="px-4 py-2 font-semibold text-sm rounded-lg shadow-md focus:outline-none transition-colors"
+                :class="{
               'bg-blue-500 text-white': cloudStore.selectedCloud === 'azure',
               'bg-gray-200 hover:bg-gray-300': cloudStore.selectedCloud !== 'azure'
             }"
-          >
-            Azure
-          </button>
-          <button
-              @click="selectCloud('aws')"
-              class="px-4 py-2 font-semibold text-sm rounded-lg shadow-md focus:outline-none transition-colors"
-              :class="{
+            >
+              Azure
+            </button>
+            <button
+                @click="selectCloud('aws')"
+                class="px-4 py-2 font-semibold text-sm rounded-lg shadow-md focus:outline-none transition-colors"
+                :class="{
               'bg-orange-500 text-white': cloudStore.selectedCloud === 'aws',
               'bg-gray-200 hover:bg-gray-300': cloudStore.selectedCloud !== 'aws'
             }"
-          >
-            AWS
-          </button>
+            >
+              AWS
+            </button>
+          </template>
+
         </div>
         <!-- Orders Link -->
         <div class="">
